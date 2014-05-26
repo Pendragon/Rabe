@@ -1,0 +1,28 @@
+<%include header.ejs %>
+<canvas id="test01" width="80" height="400">
+	Canvas not available.
+</canvas>
+<canvas id="test02" width="60" height="400">
+	Canvas not available.
+</canvas>
+<script src="js/thermo-ui.js"></script>
+<script>
+
+function maj() 
+{
+	$.get('/thermos/interieur', function(data, status) {
+		drawThermo('test01', "rgb(255,0,0)", data);
+	});
+
+	$.get('/thermos/exterieur', function(data, status) {
+		drawThermo('test02', "rgb(255,0,0)", data);
+	});		
+}
+
+$(document).ready(function() {
+	maj();
+	setInterval(maj, 10000);
+});
+
+</script>
+<%include footer.ejs%>
