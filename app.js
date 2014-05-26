@@ -5,8 +5,12 @@
 
 var port = 3000; // Port de communication ou notre serveur écoute. Par défaut, un serveur web doit être sur le port 80
 
-var Thermo = require ('./lib/thermo.js');		// Load the Thermo definition & define the hardware id & probe we have
-var thermos = { interieur: new Thermo("28-00000556a548", "Interieur", 10000), exterieur: new Thermo("28-00000555dec3", "Exterieur", 10000) };
+// Load the Thermo definition & define the hardware id & probe we have
+var Thermo = require ('./lib/thermo.js');		
+var thermos = { 
+	interieur: new Thermo("28-00000556a548", "Interieur", 10000), 
+	exterieur: new Thermo("28-00000555dec3", "Exterieur", 10000) 
+};
 
 var express = require('express');				
 var app = express();
