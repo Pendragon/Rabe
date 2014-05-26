@@ -15,8 +15,11 @@ var app = express();
 var monk = require('monk'); 
 var db = monk('localhost/belmont');	// Link to the local 'belmont' database. 
 
+// The res.render function bellow will use the ejs engine.
+// the first argument of .render is the name of the views/<name>.ejs file that will be transformed into html
 app.set('view engine', 'ejs');
 
+// all files in /static will be renderer directly without anayses from application
 app.use(express.static(__dirname + '/static'));
 
 // Mise a jour des variables.
@@ -26,14 +29,17 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// a curent empty page that will be the login page
 app.get('/', function(req, res) { 
 	res.render('index', {title: "Hello !"});
 });
 
+// Basic test to see the current thermo value in a graphical result
 app.get('/test', function(req, res) {
- 	res.render('test', {titre: version, thermos: thermos});
+ 	res.render('test', {titre: "Thermo read test", thermos: thermos});
 });
 
+// db test
 app.get('/db', function(req, res) {
 	var collection = req.db.get('users');
 	collection.find({}, function(e, users) {
@@ -41,11 +47,16 @@ app.get('/db', function(req, res) {
 	});
 });
 
+// Ajax call to get the various thermo value
 app.get('/thermos/:name', function(req, res) {
+	// the toString() took me an evening to find.
+	// by default res.send will behave differently if the parameter is a string or a number
+	// a string is sent to the browser, and he result from the resquest is 200 (ok), browser will dsiplay the string (html)
+	// a number is considered as the result. As temperature was never 200, the browser consider the request failled...
 	res.send(thermos[req.params.name].value().toString());
 });
 
 var server = app.listen(port, function() {
-    console.log('Serveur version %s a l\'ecoute sur le port %d', version, server.address().port);
+    console.log('Server started on port %d', server.address().port);
 });
 
