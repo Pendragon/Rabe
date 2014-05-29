@@ -5,21 +5,21 @@
 
 var port = 3000; // Port de communication ou notre serveur écoute. Par défaut, un serveur web doit être sur le port 80
 
-// Load the Thermo definition & define the hardware id & probe we have
-var Thermo = require ('./lib/thermo.js');		
-var thermos = { 
-	interieur: new Thermo("28-00000556a548", "Interieur", 10000), 
-	exterieur: new Thermo("28-00000555dec3", "Exterieur", 10000) 
-};
-
-var express = require('express');				
-var app = express();
-
 // Monk was brokken for Rasperry PI.
 // I had to recompile it. 
 // http://stackoverflow.com/questions/16746134/bus-error-on-mongodb-mongoclient-connect-for-raspberry-pi-arm
 var monk = require('monk'); 
 var db = monk('localhost/belmont');	// Link to the local 'belmont' database. 
+
+// Load the Thermo definition & define the hardware id & probe we have
+var Thermo = require ('./lib/thermo.js');		
+var thermos = { 
+	interieur: new Thermo("28-00000556a548", "Interieur", db, 10000), 
+	exterieur: new Thermo("28-00000555dec3", "Exterieur", db, 10000) 
+};
+
+var express = require('express');				
+var app = express();
 
 // The res.render function bellow will use the ejs engine.
 // the first argument of .render is the name of the views/<name>.ejs file that will be transformed into html
