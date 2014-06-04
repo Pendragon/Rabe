@@ -19,7 +19,9 @@ var thermos = {
 	exterieur: new Thermo("28-00000555dec3", "Exterieur", db, 10000) 
 };
 
-var express = require('express');				
+var express = require('express');
+var cookieParser = require('cookie-parser')
+var session	= require('express-session')
 var app = express();
 var bodyParser = require('body-parser');
 
@@ -32,6 +34,8 @@ app.set('view engine', 'ejs');
 // all files in /static will be renderer directly without anayses from application
 app.use(express.static(__dirname + '/static'));
 app.use(bodyParser());
+app.use(cookieParser());
+app.use(session({secret: "lskfdnjglmkjlmsd kljlmkj 86"}));
 
 
 // Mise a jour des variables.
@@ -42,7 +46,46 @@ app.use(function(req, res, next) {
 });
 
 
-// a curent empty page that will be the login page
+app.get('/login', function(req, res) {
+	res.render('login', {});
+});
+
+
+app.post('/login', function(req, res) {
+	var user = new User(req.db);
+
+	util.log(util.inspect(req.body));
+	user.auth(req.body.user, req.body.password, function(err, result) {
+		util.log(util.inspect(result));
+		if (result) {
+			req.session.uid = result._id;
+			res.render('index', {title: "Hello World"});			
+		}
+		else
+			res.render('login', {});
+	})
+});
+
+
+// All pages on this site needs a valid session. If not, go to login page
+// WARNING login post and get needs to be declared before this one
+app.use(function(req, res, next) {
+	var sess = req.session;
+
+	if (sess.uid)
+		next();
+	else
+		res.render('login', {});
+});
+
+
+app.get('/logout', function(req, res){  
+  req.session.destroy(function(){
+    res.redirect('/');
+  });
+});
+
+
 app.get('/', function(req, res) { 
 	res.render('index', {title: "Hello !"});
 });
@@ -63,30 +106,12 @@ app.get('/db', function(req, res) {
 });
 
 
-app.get('/login', function(req, res) {
-	res.render('login', {});
-});
-
-
-app.post('/login', function(req, res) {
-	var user = new User(req.db);
-
-	util.log(util.inspect(req.body));
-	user.auth(req.body.email, req.body.password, function(err, result) {
-		if (result)
-			res.render('index', {title: "Hello World"});
-		else
-			res.render('login', {});
-	})
-});
-
-
 app.post('/user/create', function(req, res) {
 	var user = new User(req.db);
 
 	util.log(util.inspect(req.body));
 
-	user.getbyname(req.body.name, function(err, result) {
+	user.getbyname(req.body.email, function(err, result) {
 		if (err) throw err;
 
 		if (result) 
@@ -101,9 +126,11 @@ app.post('/user/create', function(req, res) {
 	})
 });
 
+
 app.get('/user/create', function(req, res) {
 	res.render('user_create', {result: '', message: " - - "});
 });
+
 
 // Check if a user exist or not
 app.get('/user/check/:name', function(req, res) {
@@ -113,6 +140,7 @@ app.get('/user/check/:name', function(req, res) {
 		if (user) res.send("OK"); else res.send("E");
 	})
 })
+
 
 // Ajax call to get the various thermo value
 // this only sent the result to the browser. Not an html page. It's intended to be used by a javascipt client side.
