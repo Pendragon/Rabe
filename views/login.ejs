@@ -1,0 +1,33 @@
+<%include header.ejs %>
+<div class="main-bg-login">
+
+	<div class="container-fluid">
+        	<div id="login">	
+			<div class="login-wrapper" data-active="log">
+				<div id="log">
+					<div style="margin-top:20px">
+			            		<h1 class="center darker">Directory Administration</h1>
+				            	<hr/>
+				            	<h3 class="center">Please login</h3>
+						</div>
+						<form role="form" id="login-form" class="form-horizontal" action="login" method="post">
+							<div class="row">
+                						<div class="form-group relative">
+					        	            	<div class="icon"><i class="icon20 i-user"></i></div>
+					                	       	<input class="form-control" type="text" name="user" id="user" placeholder="Username" value="">
+	                                			</div><!-- End .control-group  -->
+        	                				<div class="form-group relative">
+					                                <div class="icon"><i class="icon20 i-key"></i></div>
+                        	        				<input class="form-control" type="password" name="password" id="password" placeholder="Password" value="">                               
+								</div><!-- End .control-group  -->
+						                <div class="form-group relative">
+                                					<button id="loginBtn" type="submit" class="btn btn-primary pull-right col-lg-5">Login</button>
+				                        	</div>
+							</div><!-- End .row-fluid  -->
+						</form>
+					</div>
+				</div>
+			</div>     
+              </div>
+</div>
+<%include footer.ejs %>
