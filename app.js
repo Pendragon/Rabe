@@ -11,8 +11,9 @@ var port = 3000; // Port de communication ou notre serveur écoute. Par défaut,
 var monk = require('monk'); 
 var db = monk('localhost/belmont');	// Link to the local 'belmont' database. 
 
+var User = require('./lib/user');
 // Load the Thermo definition & define the hardware id & probe we have
-var Thermo = require ('./lib/thermo.js');		
+var Thermo = require ('./lib/thermo');		
 var thermos = { 
 	interieur: new Thermo("28-00000556a548", "Interieur", db, 10000), 
 	exterieur: new Thermo("28-00000555dec3", "Exterieur", db, 10000) 
@@ -20,6 +21,9 @@ var thermos = {
 
 var express = require('express');				
 var app = express();
+var bodyParser = require('body-parser');
+
+var util = require('util');
 
 // The res.render function bellow will use the ejs engine.
 // the first argument of .render is the name of the views/<name>.ejs file that will be transformed into html
@@ -27,6 +31,8 @@ app.set('view engine', 'ejs');
 
 // all files in /static will be renderer directly without anayses from application
 app.use(express.static(__dirname + '/static'));
+app.use(bodyParser());
+
 
 // Mise a jour des variables.
 app.use(function(req, res, next) {
@@ -35,15 +41,18 @@ app.use(function(req, res, next) {
 	next();
 });
 
+
 // a curent empty page that will be the login page
 app.get('/', function(req, res) { 
 	res.render('index', {title: "Hello !"});
 });
 
+
 // Basic test to see the current thermo value in a graphical result
 app.get('/test', function(req, res) {
  	res.render('test', {titre: "Thermo read test", thermos: thermos});
 });
+
 
 // db test
 app.get('/db', function(req, res) {
@@ -52,6 +61,58 @@ app.get('/db', function(req, res) {
 		res.render('db', {users: users});
 	});
 });
+
+
+app.get('/login', function(req, res) {
+	res.render('login', {});
+});
+
+
+app.post('/login', function(req, res) {
+	var user = new User(req.db);
+
+	util.log(util.inspect(req.body));
+	user.auth(req.body.email, req.body.password, function(err, result) {
+		if (result)
+			res.render('index', {title: "Hello World"});
+		else
+			res.render('login', {});
+	})
+});
+
+
+app.post('/user/create', function(req, res) {
+	var user = new User(req.db);
+
+	util.log(util.inspect(req.body));
+
+	user.getbyname(req.body.name, function(err, result) {
+		if (err) throw err;
+
+		if (result) 
+			res.render('user_create', {result: 'E', message: "Utilisateur existant"});
+		else
+			user.create(req.body.email, req.body.password, function(err, result) {
+				if (result)
+					res.render('user_create', {result: 'OK', message: "Creation OK: " + result._id});	
+				else
+					res.render('user_create', {result: 'E', message: "Erreur de creation OK"});	
+			})
+	})
+});
+
+app.get('/user/create', function(req, res) {
+	res.render('user_create', {result: '', message: " - - "});
+});
+
+// Check if a user exist or not
+app.get('/user/check/:name', function(req, res) {
+	var user = new User(req.db);
+	util.log("Checking name " + req.params.name);
+	user.getbyname(req.params.name, function(err, user) {
+		if (user) res.send("OK"); else res.send("E");
+	})
+})
 
 // Ajax call to get the various thermo value
 // this only sent the result to the browser. Not an html page. It's intended to be used by a javascipt client side.
@@ -64,6 +125,5 @@ app.get('/thermos/:name', function(req, res) {
 });
 
 var server = app.listen(port, function() {
-    console.log('Server started on port %d', server.address().port);
+    util.log('Server started on port ' + server.address().port);
 });
-
