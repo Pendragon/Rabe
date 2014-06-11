@@ -1,31 +1,31 @@
 <%include header.ejs %>
+							<br/>
+							<br/>
+							<br/>
+							<br/>
 
-	<div class="container-fluid">
-        	<div id="login">	
-			<div class="login-wrapper" data-active="log">
-				<div id="log">
-					<div style="margin-top:20px">
-			            		<h1 class="center darker">Belmont</h1>
-				            	<hr/>
-						</div>
-						<form role="form" id="login-form" class="form-horizontal" action="login" method="post">
-							<div class="row">
-                						<div class="form-group relative">
-					        	            	<div class="icon"><i class="icon20 i-user"></i></div>
-					                	       	<input class="form-control" type="text" name="user" id="user" placeholder="eMail" value="">
-	                                			</div><!-- End .control-group  -->
-        	                				<div class="form-group relative">
-					                                <div class="icon"><i class="icon20 i-key"></i></div>
-                        	        				<input class="form-control" type="password" name="password" id="password" placeholder="Mot de passe" value="">                               
-								</div><!-- End .control-group  -->
-						                <div class="form-group relative">
-                                					<button id="loginBtn" type="submit" class="btn btn-primary pull-right col-lg-5">Connection</button>
-				                        	</div>
-							</div><!-- End .row-fluid  -->
-						</form>
+<div class="container-fluid" style="background: #ffffff url('back.png') no-repeat right top;">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-1">
+			<div class="panel panel-default" style="padding:5px">
+				<form class="form-inline" role="form" action="login" method="post">
+					<div class="form-group">
+						<label class="sr-only" for="exampleInputEmail1">Email </label>
+  						<input class="form-control" type="text" name="user" placeholder="eMail" value="" :focused>
 					</div>
-				</div>
-			</div>     
-              </div>
+					<div class="form-group">
+  						<label class="sr-only" for="exampleInputEmail1">Mot de passe</label>
+						<input class="form-control" type="password" name="password" placeholder="Mot de passe" value="">                               
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Connection</button>
+					</div>						
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
+
+
+
 <%include footer.ejs %>
