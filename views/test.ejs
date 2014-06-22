@@ -1,10 +1,17 @@
 <%include header.ejs %>
+<%include nav.ejs %>
+
+<%= thermos.interieur.name() + "= " + thermos.interieur.value() %><br/>
+<%= thermos.exterieur.name() + "= " + thermos.exterieur.value() %><br/>
+
 <canvas id="test01" width="60" height="400">
 	Canvas not available.
 </canvas>
+Interieur
 <canvas id="test02" width="60" height="400">
 	Canvas not available.
 </canvas>
+Exterieur
 <script src="js/thermo-ui.js"></script>
 <script>
 

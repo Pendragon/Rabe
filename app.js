@@ -15,8 +15,8 @@ var User = require('./lib/user');
 // Load the Thermo definition & define the hardware id & probe we have
 var Thermo = require ('./lib/thermo');		
 var thermos = { 
-	interieur: new Thermo("28-00000556a548", "Interieur", db, 10000), 
-	exterieur: new Thermo("28-00000555dec3", "Exterieur", db, 10000) 
+	interieur: new Thermo("28-00000555dec3", "Interieur", db, 10000), 
+	exterieur: new Thermo("28-00000556a548", "Exterieur", db, 10000) 
 };
 
 var express = require('express');
@@ -54,7 +54,6 @@ app.get('/login', function(req, res) {
 app.post('/login', function(req, res) {
 	var user = new User(req.db);
 
-	util.log(util.inspect(req.body));
 	user.auth(req.body.user, req.body.password, function(err, result) {
 		util.log(util.inspect(result));
 		if (result) {
