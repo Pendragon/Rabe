@@ -18,3 +18,10 @@ TODO
  * Add webcam flow
  * Add webcam control
 
+Rasperry Pi installation
+========================
+
+http://joshondesign.com/2013/10/23/noderpi
+https://help.github.com/articles/generating-ssh-keys#platform-linux
+
+
