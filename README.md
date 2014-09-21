@@ -21,7 +21,9 @@ TODO
 Rasperry Pi installation
 ========================
 
-http://joshondesign.com/2013/10/23/noderpi
-https://help.github.com/articles/generating-ssh-keys#platform-linux
+How to install node: http://joshondesign.com/2013/10/23/noderpi
+How to add GIT SSH key : https://help.github.com/articles/generating-ssh-keys#platform-linux
+Module loading : http://www.framboise314.fr/mesure-de-temperature-1-wire-ds18b20-avec-le-raspberry-pi/
+Building mongo: http://aloon.com/install-mongodb-in-raspberry-pi/
 
 
