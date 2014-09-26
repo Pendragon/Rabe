@@ -11,6 +11,8 @@ var port = 80; // Port de communication ou notre serveur écoute. Par défaut, u
 var monk = require('monk'); 
 var db = monk('localhost/belmont');	// Link to the local 'belmont' database. 
 
+// Dummy modification 
+
 var User = require('./lib/user');
 // Load the Thermo definition & define the hardware id & probe we have
 var Thermo = require ('./lib/thermo');		
