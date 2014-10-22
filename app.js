@@ -3,7 +3,7 @@
 // Author      : Arthur & Jean-Paul GERST
 // Date        : avril 2014  
 
-var port = 80; // Port de communication ou notre serveur écoute. Par défaut, un serveur web doit être sur le port 80
+var port = 8080; // Port de communication ou notre serveur écoute. Par défaut, un serveur web doit être sur le port 80
 
 // Monk was brokken for Rasperry PI.
 // I had to recompile it. 
