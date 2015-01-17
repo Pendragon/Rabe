@@ -9,6 +9,18 @@ var config = {}
 
 config.web = {};
 config.web.port = process.env.WEB_PORT || 8080;
-config.database = 'localhost/belmont';
+config.web.secret = "lkfdjsjmglkjdfmlkjg ! 36";
+
+config.crypto = {}
+config.crypto.password = 'lskfdngm mqkgd ç33àç)àuçàçu';
+
+config.rabe = {};
+config.rabe.server = 'rabe.gerst.fr';
+config.rabe.server_port = 7234;
+config.rabe.name = "Sonde de temperature de Belmont";
+
+config.thermo = {};
+config.thermo.debug = false;
+config.thermo.demo = true;
 
 module.exports = config;

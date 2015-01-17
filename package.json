@@ -1,14 +1,12 @@
 {
   "name": "Rabe",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
     "express": "~4.3.0",
     "express-session": "*",
     "cookie-parser": "*",
     "body-parser": "~1.0.0",
-    "monk": "0.8.1",
-    "bcryptjs": "*",
     "ejs": "~1.0.0"
   }
 }
