@@ -9,8 +9,8 @@ var config = require('./config')
 // Load the Thermo definition & define the hardware id & probe we have
 var Thermo = require ('./lib/thermo');		
 var thermos = { 
-	interieur: new Thermo("28-00000555dec3", "Interieur", 10000), 
-	exterieur: new Thermo("28-00000556a548", "Exterieur", 10000) 
+	interieur: new Thermo("28-00000556a548", "Interieur", 300000), // 300 000 = 5 * 60 * 1000 = every 5 minutes
+	exterieur: new Thermo("28-00000555dec3", "Exterieur", 300000) 
 };
 
 var express = require('express');
