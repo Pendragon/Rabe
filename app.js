@@ -55,8 +55,31 @@ app.get('/thermos/:name', function(req, res) {
 	// by default res.send will behave differently if the parameter is a string or a number
 	// a string is sent to the browser to display, and he result from the resquest is 200 (ok), 
 	// a number is considered as the result. As temperature was never 200, the browser consider the request failled...
-	res.send(thermos[req.params.name].value().toString());
+	var resp = thermos[req.params.name].value() ;
+	if (resp) {
+		res.send(resp.toString());
+	}
+	else {// Application is restarting, but a browser update is comming
+		res.send(500);
+	}
 });
+
+// Ajax call to get the various thermo value
+// this only sent the result to the browser. Not an html page. It's intended to be used by a javascipt client side.
+app.get('/thermos/:name/history_list', function(req, res) {
+	// the toString() took me an evening to find.
+	// by default res.send will behave differently if the parameter is a string or a number
+	// a string is sent to the browser to display, and he result from the resquest is 200 (ok), 
+	// a number is considered as the result. As temperature was never 200, the browser consider the request failled...
+	var resp = thermos[req.params.name].history_list() ;
+	if (resp) {
+		res.send(resp.toString());
+	}
+	else {// Application is restarting, but a browser update is comming
+		res.send(500);
+	}
+});
+
 
 var server = app.listen(config.web.port, function() {
     util.log(config.rabe.name + ' started on port ' + server.address().port);
