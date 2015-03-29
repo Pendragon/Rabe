@@ -1,4 +1,6 @@
 
+
+
 function drawLine(ctx, x1, y1, x2, y2, color)
 {
 	ctx.fillStyle = color;
@@ -66,4 +68,38 @@ function drawThermo(id, color, temperature)
 	ctx.textAlign = 'left';
 	ctx.textBaseline = 'bottom';
 	ctx.fillText(temperature + "°C", x_interval * 0.5, height);
+}
+
+
+function drawHisto(id, csv)
+{
+
+	var chart = new Highcharts.Chart({
+	    chart: {
+	        renderTo: id
+	    },
+		yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            }
+     	},
+     
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+	    data: {
+	        csv: csv
+	    }
+
+	});
 }
