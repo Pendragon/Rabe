@@ -1,6 +1,7 @@
 <%include header.ejs %>
 <%include nav.ejs %>
 
+<div id="debug"></div>
 <div class="container-fluid">
 <div class="row">
   <div class="col-md-2">
@@ -31,8 +32,10 @@
 
 function maj_courbe()
 {
-  $.get('/thermos/interieur/history', function(data, status) {
-    drawHisto('courbe', data);
+  document.getElementById('debug').innerHTML  = "toto";
+  $.when($.get('/thermos/interieur/history'), $.get('/thermos/exterieur/history')).done(function(data_int, data_ext) {
+          document.getElementById('debug').innerHTML = data_ext[0];
+      drawHisto('courbe', data_int[0], data_ext[0]);
   });
 }
 
