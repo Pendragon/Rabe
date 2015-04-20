@@ -17,7 +17,10 @@
   	</div>
   </div>
   <div class="col-md-8">
-      <div id='courbe'></div>
+    <div class="panel panel-default">
+      <div class="panel-heading"><h1 class="panel-title">Les 3 derniers jours</h1></div>
+      <div class="panel-body"><div id='courbe'></div></div>
+    </div>      
   </div>
 </div>
 </div>
@@ -32,10 +35,26 @@
 
 function maj_courbe()
 {
-  document.getElementById('debug').innerHTML  = "toto";
+
   $.when($.get('/thermos/interieur/history'), $.get('/thermos/exterieur/history')).done(function(data_int, data_ext) {
-          document.getElementById('debug').innerHTML = data_ext[0];
-      drawHisto('courbe', data_int[0], data_ext[0]);
+    var serie1 = data_int[0].split("\n");
+    var serie2 = data_ext[0].split("\n");
+    var totale = "Date, Interieur, Exterieur\n";
+
+    serie1.forEach(function(ligne) {
+      if (ligne.length) {
+        var val = ligne.split(",");
+        totale = totale + val[0] + ',' + val[1] + ",\n";
+      }
+    });
+    serie2.forEach(function(ligne) {
+      if (ligne.length) {
+        var val = ligne.split(",");
+        totale = totale + val[0] + ',,' + val[1] + "\n";
+      }
+    });
+
+    drawHisto('courbe', totale);
   });
 }
 

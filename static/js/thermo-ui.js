@@ -71,15 +71,17 @@ function drawThermo(id, color, temperature)
 }
 
 
-function drawHisto(id, csv_int, csv_ext)
+function drawHisto(id, csv)
 {
-
 	var chart = new Highcharts.Chart({
 	    title: {
 	    	text: null
 	    },
 	    chart: {
 	        renderTo: id
+	    },
+	    data : {
+	    	csv: csv
 	    },
 		yAxis: {
             title: {
@@ -99,8 +101,6 @@ function drawHisto(id, csv_int, csv_ext)
         },
         tooltip: {
             valueSuffix: '°C'
-        },
-        series: [{name: 'Interieur', data: {csv: csv_int}}, {name: 'Exterieur', data: {csv: csv_ext}}]
-	    
+        },	    
 	});
 }
