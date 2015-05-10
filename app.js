@@ -77,8 +77,6 @@ app.get('/thermos/:name/history', function(req, res) {
 });
 
 
-// 
-//
 var server = app.listen(config.web.port, function() {
     util.log(config.rabe.name + ' started on port ' + server.address().port);
 });
