@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "express": "~4.3.0",
-    "express-session": "*",
-    "cookie-parser": "*",
-    "body-parser": "~1.0.0",
-    "ejs": "~1.0.0"
+    "ejs": "*"
   }
 }

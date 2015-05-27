@@ -1,0 +1,79 @@
+<%include header.ejs %>
+<%include nav.ejs %>
+
+<% 
+function get_class(s)
+{
+  switch(s) {
+    case 'E':
+      return 'danger';
+      break;
+    case 'I':
+      return 'info';
+      break;
+    case 'W':
+      return 'warning';
+      break;
+    default:
+      return '';
+      break;
+  }
+}
+
+function to_name(s) 
+{
+  switch(s) {
+    case 'E':
+      return 'Erreur';
+      break;
+    case 'I':
+      return 'Info';
+      break;
+    case 'W':
+      return 'Warning';
+      break;
+    case 'D':
+      return 'Debug';
+      break;
+    default:
+      return '?';
+      break;
+  }
+}
+
+%>
+
+<link href='https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css' rel="stylesheet">
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src='https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js'></script>
+
+<div id="debug"></div>
+<div class="container-fluid" border="10px">
+
+<table class="table compact" id="logtable">
+<thead><tr><th>Timestamp</th><th>Type</th><th>Module</th><th>Description</th><th>Detail</th></tr></thead>
+<tbody>
+<% data.forEach(function(log) {%><tr class="<%= get_class(log.s) %>"><td><%= log.timestamp %></td><td><%= to_name(log.s) %></td><td><%= log.catego.module %></td><td><%= log.data.desc %></td><td></td></tr><% }) %>
+</tbody>
+</table>
+
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+  $("#logtable").dataTable( {
+  "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+  "aaSorting": [[ 0, 'desc' ]],
+  "oLanguage": {
+    "sSearch": "<span>Filter:</span> _INPUT_",
+    "sLengthMenu": "<span>_MENU_ entries</span>",
+    "oPaginate": { "sFirst": "First", "sLast": "Last" }
+  }
+});
+
+});
+</script>
+
+
+<%include footer.ejs%>

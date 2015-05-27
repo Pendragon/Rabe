@@ -5,6 +5,7 @@
 
 // Load configuration_file
 var config = require('./config')
+var log = require ('./lib/logger');		
 
 // Load the Thermo definition & define the hardware id & probe we have
 var Thermo = require ('./lib/thermo');		
@@ -47,6 +48,9 @@ app.get('/', function(req, res) {
 	res.render('index', {title: "Hello !"});
 });
 
+app.get('/log', function(req, res) { 
+	res.render('log', {title: "Log !", data: log.messages});
+});
 
 // Ajax call to get the various thermo value
 // this only sent the result to the browser. Not an html page. It's intended to be used by a javascipt client side.
@@ -78,6 +82,6 @@ app.get('/thermos/:name/history', function(req, res) {
 
 
 var server = app.listen(config.web.port, function() {
-    util.log(config.rabe.name + ' started on port ' + server.address().port);
+	log.info(config.rabe.name + ' started on port ' + server.address().port);
 });
 
