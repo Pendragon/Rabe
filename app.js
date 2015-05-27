@@ -72,12 +72,7 @@ app.get('/thermos/:name', function(req, res) {
 // this only sent the result to the browser. Not an html page. It's intended to be used by a javascipt client side.
 app.get('/thermos/:name/history', function(req, res) {
 	var resp = thermos[req.params.name].history() ;
-	if (resp) {
-		res.send(resp.toString());
-	}
-	else {// Application is restarting, but a browser update is comming
-		res.send(500);
-	}
+	res.send(resp.toString());
 });
 
 
